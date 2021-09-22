@@ -1,12 +1,26 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function register() {
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+
+  const valid = (data) => {
+    const { fullName, userName, password, rePassword } = data;
+    if (!fullName || !userName || !password || !rePassword) {
+      return "Invalid Credentials.";
+    }
+    if (password.length < 4) {
+      return "Password Must be 4 Lengths Long.";
+    }
+    if (password !== rePassword) {
+      return "Password Doesn't Match";
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +30,10 @@ function register() {
       password: password,
       rePassword: rePassword,
     };
-    console.log(data);
+    const err = valid(data);
+    if (err) {
+      toast.error(err);
+    }
   };
 
   return (
