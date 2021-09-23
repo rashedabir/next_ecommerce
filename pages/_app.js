@@ -2,13 +2,16 @@ import { ToastContainer } from "react-toastify";
 import Layout from "../components/Layout";
 import "../styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import { DataProvider } from "../store/GlobalState";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-      <ToastContainer />
-    </Layout>
+    <DataProvider>
+      <Layout>
+        <Component {...pageProps} />
+        <ToastContainer />
+      </Layout>
+    </DataProvider>
   );
 }
 

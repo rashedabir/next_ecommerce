@@ -1,7 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading";
+import ACTIONS from "../store/Actions";
+import { DataContext } from "../store/GlobalState";
+import { postData } from "../utils/fetchData";
 
 function register() {
   const [fullName, setFullName] = useState("");
@@ -9,20 +13,11 @@ function register() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
-  const valid = (data) => {
-    const { fullName, userName, password, rePassword } = data;
-    if (!fullName || !userName || !password || !rePassword) {
-      return "Invalid Credentials.";
-    }
-    if (password.length < 4) {
-      return "Password Must be 4 Lengths Long.";
-    }
-    if (password !== rePassword) {
-      return "Password Doesn't Match";
-    }
-  };
+  const [state, dispatch] = useContext(DataContext);
 
-  const handleSubmit = (e) => {
+  const { notify } = state;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
       fullName: fullName,
@@ -30,11 +25,19 @@ function register() {
       password: password,
       rePassword: rePassword,
     };
-    const err = valid(data);
-    if (err) {
-      toast.error(err);
+    dispatch({ type: ACTIONS.NOTIFY, payload: { loading: true } });
+    const res = await postData("auth/register", data);
+    if (res.err) {
+      toast.error(res.err);
+      return dispatch({ type: ACTIONS.NOTIFY, payload: { error: res.err } });
     }
+    toast.success(res.msg);
+    return dispatch({ type: ACTIONS.NOTIFY, payload: { success: res.msg } });
   };
+
+  if (notify.loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="container">
@@ -55,7 +58,8 @@ function register() {
               placeholder="name@example.com"
               value={fullName}
               onChange={(e) => {
-                setFullName(e.target.value);
+                setFullName(e.target.value),
+                  dispatch({ type: ACTIONS.NOTIFY, payload: {} });
               }}
             />
             <label htmlFor="floatingInput">Full Name</label>
@@ -68,7 +72,8 @@ function register() {
               value={userName}
               placeholder="name@example.com"
               onChange={(e) => {
-                setUserName(e.target.value);
+                setUserName(e.target.value),
+                  dispatch({ type: ACTIONS.NOTIFY, payload: {} });
               }}
             />
             <label htmlFor="floatingInput">Username</label>
@@ -81,7 +86,8 @@ function register() {
               placeholder="Password"
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value);
+                setPassword(e.target.value),
+                  dispatch({ type: ACTIONS.NOTIFY, payload: {} });
               }}
             />
             <label htmlFor="floatingPassword">Password</label>
@@ -94,7 +100,8 @@ function register() {
               placeholder="Password"
               value={rePassword}
               onChange={(e) => {
-                setRePassword(e.target.value);
+                setRePassword(e.target.value),
+                  dispatch({ type: ACTIONS.NOTIFY, payload: {} });
               }}
             />
             <label htmlFor="floatingPassword">Repeat Password</label>

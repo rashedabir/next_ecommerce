@@ -8,10 +8,7 @@ const connectDB = () => {
   mongoose.connect(
     process.env.MONGODB_URI,
     {
-      useCreateIndex: true,
-      useFindAndModify: false,
       useNewUrlParser: true,
-      useUnidefiedTopology: true,
     },
     (err) => {
       if (err) throw err;
