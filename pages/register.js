@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../components/Loading";
 import ACTIONS from "../store/Actions";
 import { DataContext } from "../store/GlobalState";
 import { postData } from "../utils/fetchData";
+import { useRouter } from "next/router";
 
 function register() {
   const [fullName, setFullName] = useState("");
@@ -13,9 +14,11 @@ function register() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
 
-  const [state, dispatch] = useContext(DataContext);
+  const { state, dispatch } = useContext(DataContext);
 
-  const { notify } = state;
+  const { auth, notify } = state;
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,6 +41,10 @@ function register() {
   if (notify.loading) {
     return <Loading />;
   }
+
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0) router.push("/");
+  }, [auth]);
 
   return (
     <div className="container">
