@@ -43,16 +43,19 @@ function signin() {
       expires: 7,
     });
     localStorage.setItem("login", true);
-    toast.success(res.msg);
+    if (res.msg) {
+      toast.success(res.msg);
+      router.push("/");
+    }
   };
 
   if (notify.loading) {
     return <Loading />;
   }
 
-  useEffect(() => {
-    if (Object.keys(auth).length !== 0) router.push("/");
-  }, [auth]);
+  // useEffect(() => {
+  //   if (Object.keys(auth).length !== 0) router.push("/");
+  // }, [auth]);
 
   return (
     <div className="container">

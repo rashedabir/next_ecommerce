@@ -42,9 +42,9 @@ function register() {
     return <Loading />;
   }
 
-  useEffect(() => {
-    if (Object.keys(auth).length !== 0) router.push("/");
-  }, [auth]);
+  // useEffect(() => {
+  //   if (Object.keys(auth).length !== 0) router.push("/");
+  // }, [auth]);
 
   return (
     <div className="container">
