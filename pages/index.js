@@ -10,7 +10,9 @@ const Home = (props) => {
       {products.length === 0 ? (
         <h1>No Products</h1>
       ) : (
-        products.map((product) => <ProductItem product={product} />)
+        products.map((product) => (
+          <ProductItem key={product._id} product={product} />
+        ))
       )}
     </div>
   );

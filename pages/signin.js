@@ -67,8 +67,8 @@ function signin() {
           className="border p-3 shadow-sm bg-body rounded"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-center py-5">Login</h2>
-          <div className="form-floating mb-3">
+          <h2 className="text-center pt-5 pb-5 border-bottom">Login</h2>
+          <div className="form-floating mb-3 mt-3">
             <input
               type="text"
               className="form-control"

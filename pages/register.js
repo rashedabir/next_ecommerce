@@ -56,8 +56,8 @@ function register() {
           className="border p-3 shadow-sm bg-body rounded"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-center py-5">Register</h2>
-          <div className="form-floating mb-3">
+          <h2 className="text-center pt-5 border-bottom pb-5">Register</h2>
+          <div className="form-floating mb-3 mt-3">
             <input
               type="text"
               className="form-control"
