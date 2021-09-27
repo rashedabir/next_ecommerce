@@ -1,12 +1,25 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getData } from "../../utils/fetchData";
 
 const DetailProduct = (props) => {
   const [product] = useState(props.product);
+  const [tab, setTab] = useState(0);
+  const imgRef = useRef();
+
+  useEffect(() => {
+    const images = imgRef.current.children;
+    for (let i = 0; i < images.length; i++) {
+      images[i].className = images[i].className.replace(
+        "active",
+        "img-thumbnail me-2 px-1"
+      );
+    }
+    images[tab].className = "img-thumbnail me-2 px-1 active";
+  }, [tab]);
 
   return (
-    <div className="container py-3">
+    <div className="container py-3 detail_product">
       <Head>
         <title>Detail Product</title>
       </Head>
@@ -14,11 +27,31 @@ const DetailProduct = (props) => {
         <div className="col-lg-6 my-2">
           <div className="p-2">
             <img
-              width="100%"
-              src={product.images[0].url}
+              style={{ height: "400px", width: "100%", objectFit: "cover" }}
+              src={product.images[tab].url}
               alt={product.title}
-              className="img-thumbnail"
+              className="mb-2"
             />
+            <div className="row mx-0 my-2" ref={imgRef}>
+              {product &&
+                product.images.map((img, index) => (
+                  <img
+                    style={{
+                      height: "80px",
+                      width: "22%",
+                      objectFit: "cover",
+                      cursor: "pointer",
+                    }}
+                    className="img-thumbnail me-2 px-1 mb-2"
+                    key={index}
+                    src={img.url}
+                    alt=""
+                    onClick={() => {
+                      setTab(index);
+                    }}
+                  />
+                ))}
+            </div>
           </div>
         </div>
         <div className="col-lg-6 my-2">
@@ -31,7 +64,11 @@ const DetailProduct = (props) => {
               {product.price}
             </h4>
             <div className="text-danger d-flex justify-content-between">
-              <h6>In Stock: {product.inStock}</h6>
+              {product.inStock > 0 ? (
+                <h6>In Stock: {product.inStock}</h6>
+              ) : (
+                <h6>Out Stock</h6>
+              )}
               <h6>Sold: {product.sold}</h6>
             </div>
             <h6 className="py-3">{product.description}</h6>

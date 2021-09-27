@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../components/Loading";
-import ACTIONS from "../store/Actions";
+import { ACTIONS } from "../store/Actions";
 import { DataContext } from "../store/GlobalState";
 import { postData } from "../utils/fetchData";
 import { useRouter } from "next/router";

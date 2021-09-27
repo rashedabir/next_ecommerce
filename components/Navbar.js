@@ -3,14 +3,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import ACTIONS from "../store/Actions";
+import { ACTIONS } from "../store/Actions";
 import { DataContext } from "../store/GlobalState";
 import Loading from "./Loading";
 
 function Navbar() {
   const { state, dispatch } = useContext(DataContext);
   const [loading, setLoading] = useState(false);
-  const { auth } = state;
+  const { auth, cart } = state;
   const router = useRouter();
 
   const isActive = (r) => {
@@ -94,12 +94,29 @@ function Navbar() {
                 <a
                   className={"nav-link" + isActive("/cart")}
                   aria-current="page"
-                  style={{ textTransform: "capitalize", fontSize: "17px" }}
+                  style={{
+                    textTransform: "capitalize",
+                    fontSize: "17px",
+                    position: "relative",
+                  }}
                 >
                   <i
                     className="fas fa-shopping-cart me-1"
-                    style={{ fontSize: "20px" }}
+                    style={{ fontSize: "23px" }}
                   ></i>
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      left: "24px",
+                      backgroundColor: "crimson",
+                      color: "white",
+                      borderRadius: "25px",
+                      padding: "0px 2px",
+                    }}
+                  >
+                    {cart.length}
+                  </span>
                   Cart
                 </a>
               </Link>

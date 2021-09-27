@@ -75,3 +75,9 @@ a {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+
+/*------------------------detail_product--------------------------*/
+
+.detail_product .img-thumbnail.active {
+  border: 3px solid crimson;
+}

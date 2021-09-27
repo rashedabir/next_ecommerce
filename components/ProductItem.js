@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { DataContext } from "../store/GlobalState";
+import { addToCart } from "../store/Actions";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 function ProductItem({ product }) {
   const { state, dispatch } = useContext(DataContext);
-  const { auth } = state;
+  const { auth, cart } = state;
 
   const userLink = () => {
     return (
@@ -30,6 +32,9 @@ function ProductItem({ product }) {
             flex: 1,
           }}
           disabled={product.inStock === 0 ? true : false}
+          onClick={() => {
+            dispatch(addToCart(product, cart));
+          }}
         >
           Buy
         </button>
