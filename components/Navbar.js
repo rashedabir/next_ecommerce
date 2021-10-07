@@ -103,7 +103,8 @@ function Navbar() {
                   <i
                     className="fas fa-shopping-cart me-1"
                     style={{ fontSize: "23px" }}
-                  ></i>
+                    aria-hidden="true"
+                  />
                   <span
                     style={{
                       position: "absolute",
@@ -132,7 +133,8 @@ function Navbar() {
                     <i
                       className="fas fa-user me-1"
                       style={{ fontSize: "20px" }}
-                    ></i>
+                      aria-hidden="true"
+                    />
                     Sign in
                   </a>
                 </Link>
